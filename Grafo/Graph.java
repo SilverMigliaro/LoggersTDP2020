@@ -44,8 +44,8 @@ public class Graph{
 			Handler hnd = new ConsoleHandler();
 			hnd.setLevel(Level.FINE);
 			logger.addHandler(hnd);
-
-			logger.setLevel(Level.WARNING);
+ 
+			logger.setLevel(Level.FINE);
 
 			Logger rootLogger = logger.getParent();
 			for(Handler h : rootLogger.getHandlers()) {
@@ -58,30 +58,33 @@ public class Graph{
 
 		boolean esta_n1 = this.nodes.containsKey(node1);
 		boolean esta_n2 = this.nodes.containsKey(node2);
+		boolean esta_arco = this.edges.containsKey(node1+","+node2);
 		
-		if(esta_n1 && esta_n2) {
+		if(!esta_arco) {
 			
-			Edge edge = new Edge(node1,node2);
-			String key = node1+","+node2;
-			Edge value = this.edges.put(key,edge);
-	
-			if(value != null){
-				logger.warning("El arco ("+node1+","+node2+") esta en el grafo.");
-			}
-			else{
+			if(esta_n1 && esta_n2) {
+
+				this.edges.put(node1+","+node2,new Edge(node1,node2));
 				logger.info("El arco ("+node1+","+node2+") se inserto correctamente en el grafo.");
 			}
-		}
-		else {
-			logger.warning("Uno de los nodo no esta presente en el grafo.");
-			
-			if(esta_n1) {
-				logger.info("El nodo "+node2+" no esta en el grafo.");
-			}
 			else {
-				logger.info("El nodo "+node1+" no esta en el grafo.");
-			}		
+				
+				logger.warning("No se puede crear arco ("+node1+","+node2+"), uno o ambos nodos no estan presente en el grafo.");
+				
+				if(!esta_n1) {
+					logger.info("El nodo "+node1+" no esta en el grafo.");
+				}
+				if(!esta_n2) {
+					logger.info("El nodo "+node2+" no esta en el grafo.");
+				}		
+			}				
+		}	
+		else {
+			
+			logger.warning("El arco ("+node1+","+node2+") esta en el grafo.");
+			
 		}
+
 	}
 
 	public void addNode(int node){
@@ -100,33 +103,20 @@ public class Graph{
 	}
 
 	public void removeEdge(int node1,int node2){
+
+		boolean esta_arco = this.edges.containsKey(node1+","+node2);
 		
-		boolean esta_n1 = this.nodes.containsKey(node1);
-		boolean esta_n2 = this.nodes.containsKey(node2);
-		
-		if(esta_n1 && esta_n2) {
-			
-			String key = node1+","+node2;
-			Edge value = this.edges.remove(key);
-			
-			if(value == null) {
-				logger.warning("El arco "+key+" no pertenece al grafo.");
-			}
-			else {
-				logger.info("Se elimino correctamente el arco "+key+".");
-			}
+		if(esta_arco) {
+				
+				this.edges.remove(node1+","+node2);
+				logger.info("Se elimino correctamente el arco ("+node1+","+node2+").");
+
 		}
 		else {
-				
-			logger.warning("Uno de los nodo no esta presente en el grafo.");
 			
-			if(esta_n1) {
-				logger.info("El nodo "+node2+" no esta en el grafo.");
-			}
-			else {
-				logger.info("El nodo "+node1+" no esta en el grafo.");
-			}
+			logger.warning("El arco ("+node1+","+node2+") no pertenece al grafo.");
 		}
+
 	}
 
 	public void removeNode(int node){
@@ -160,7 +150,7 @@ public class Graph{
 			}
 		}
 		else{
-			logger.warning("E nodo "+node+" no esta presente en el grafo.");
+			logger.warning("El nodo "+node+" no esta presente en el grafo.");
 		}
 	}
 	
