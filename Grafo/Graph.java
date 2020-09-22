@@ -124,9 +124,7 @@ public class Graph{
 			
 			this.nodes.remove(node);
 			logger.info("Se elimino corectamente el nodo "+node+".");
-			
-			Collection<Edge> aux = this.edges.values();
-			Iterator<Edge> it = aux.iterator();
+			Iterator<Edge> it = this.edges.values().iterator();
 			
 			while(it.hasNext()) {
 				
