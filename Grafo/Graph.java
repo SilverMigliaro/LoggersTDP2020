@@ -81,10 +81,8 @@ public class Graph{
 		}	
 		else {
 			
-			logger.warning("El arco ("+node1+","+node2+") esta en el grafo.");
-			
+			logger.warning("El arco ("+node1+","+node2+") esta en el grafo.");	
 		}
-
 	}
 
 	public void addNode(int node){
@@ -95,9 +93,9 @@ public class Graph{
 		
 			this.nodes.put(node,node);
 			logger.info("El nodo "+node+" se inserto correctamente en el grafo.");
-		
 		}
 		else {
+			
 			logger.warning("El nodo "+node+" ya esta en el grafo.");
 		}
 	}
@@ -108,15 +106,14 @@ public class Graph{
 		
 		if(esta_arco) {
 				
-				this.edges.remove(node1+","+node2);
-				logger.info("Se elimino correctamente el arco ("+node1+","+node2+").");
+			this.edges.remove(node1+","+node2);
+			logger.info("Se elimino correctamente el arco ("+node1+","+node2+").");
 
 		}
 		else {
 			
 			logger.warning("El arco ("+node1+","+node2+") no pertenece al grafo.");
 		}
-
 	}
 
 	public void removeNode(int node){
@@ -146,7 +143,6 @@ public class Graph{
 					it.remove();
 					logger.info("Se elimino arco ("+edge.getNode1()+","+edge.getNode2()+").");
 				}
-
 			}
 		}
 		else{
